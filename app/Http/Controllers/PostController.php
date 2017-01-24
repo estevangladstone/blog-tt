@@ -2,36 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Validator;
+use App\Postagem;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-
-    public function index(){
-        $posts = Post::all();
-
-        return view('posts.index', ['posts' => $posts]);
-    }
-
     public function create(){
-    	return view('posts.create');
+    	return view('create-post');
     }
 
     public function store(Request $request){
     	$validator = Validator::make($request->all(), [
-            'title' =>'required',
-            'content' =>'required',
-        ]);
+    		'titulo' => 'required',
+    		'conteudo' => 'required'
+    	]);
 
-        if($validator->fails()){
-            return response()->json(['errors' => $validator->messages()], 400);
-        } else {
-        	Post::create($request->only('title', 'content'));
+    	Postagem::create($request->only('titulo', 'conteudo'));
 
-        	return response()->json(['status' => 'O post foi criado com sucesso']);
-        }
+    	if($validator->passes()){
+    		return back()->with('status', 'Postagem criada com sucesso!');
+    	} else {
+    		return back()->withErrors($validator->messages());	
+    	}
     }
-
 }
