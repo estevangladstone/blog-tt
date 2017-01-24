@@ -18,12 +18,12 @@ class PostController extends Controller
     		'conteudo' => 'required'
     	]);
 
-    	Postagem::create($request->only('titulo', 'conteudo'));
 
-    	if($validator->passes()){
-    		return back()->with('status', 'Postagem criada com sucesso!');
-    	} else {
-    		return back()->withErrors($validator->messages());	
+        if($validator->passes()){
+           Postagem::create($request->only('titulo', 'conteudo'));
+           return response()->json(['status' => 'Postagem criada com sucesso!']);
+        } else {
+            return response()->json(['errors' => $validator->messages()], 400);
     	}
     }
 }

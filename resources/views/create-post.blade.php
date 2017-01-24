@@ -10,17 +10,7 @@
 		<hr>
 		<form id='form' action='{{ route("createPost") }}' method='POST'>
 			
-			@if(count($errors) > 0)
-				<ul class="alert alert-danger list-unstyled">
-				   	@foreach ($errors->all() as $error)
-				    	<li>{{ $error }}</li>
-				  	@endforeach
-				</ul>
-			@endif
-
-			@if(Session::has('status'))
-				<p class="alert alert-success">{{ Session::get('status') }}</p>
-			@endif
+			<div id="messages"></div>
 
 			{!! csrf_field() !!}
 			<div class="form-group">
@@ -36,5 +26,6 @@
 			</div>
 		</form>
 	</div>
+	<script type="text/javascript" src="{{ asset('js/create-post.js') }}"></script>
 </body>
 </html>
