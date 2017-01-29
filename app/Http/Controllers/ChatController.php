@@ -11,6 +11,8 @@ class ChatController extends Controller
     	return view('chat');
     }
 
+    // TODO: Fazer checagem e criar o arquivo de mensagens caso não exista
+    // TODO: Criar canais para diferentes chats poderem existir
     public function getMessages(Request $request){
     	try {
     	    $contents = Storage::get("messages.html");
@@ -22,14 +24,13 @@ class ChatController extends Controller
     	return $contents;
     }
 
+
+    // TODO: Melhorar a forma como as mensagens são armazenadas. Ex.: Banco de Dados
+    // TODO: Criar forma de identificar o usuário para diferenciar as mensagens dele
     public function sendMessage(Request $request){
     	if($request->message == ''){ return; }
 
-    	if(strpos($request->message, "###21a4da ") == '0'){
-    		$message = substr($request->message, 3, strlen($request->message)-1);
-    	} else {
-    		$message = htmlspecialchars($request->message, ENT_QUOTES);
-    	}
+		$message = htmlspecialchars($request->message, ENT_QUOTES);
 
 		$f = fopen(storage_path("app/messages.html"), "a");
 		$time = date("H:i:s");
