@@ -18,6 +18,6 @@ Route::get('/', function () {
 Route::get('/blog/post/create', 'PostController@create');
 Route::post('/blog/post/create', 'PostController@store')->name('createPost');
 
-Route::get('chat', 'ChatController@index');
-Route::get('chat/get-messages', 'ChatController@getMessages');
-Route::post('chat/send-message', 'ChatController@sendMessage');
+Route::post('chat/send', 'ChatController@saveMessage');
+Route::get('chat/update/{last_message?}', 'ChatController@updateChat');
+Route::get('chat/more/{older_message}', 'ChatController@olderMessages');
